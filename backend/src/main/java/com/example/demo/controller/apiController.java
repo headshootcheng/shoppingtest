@@ -23,7 +23,7 @@ public class apiController {
     public List<Location> loadLocation(){
         List <Location> locationList = new ArrayList<>();
         for(Location eachLocation:Location.values()){
-            System.out.println(eachLocation);
+            //System.out.println(eachLocation);
             locationList.add(eachLocation);
         }
         return  locationList;

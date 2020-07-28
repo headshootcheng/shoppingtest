@@ -26,7 +26,7 @@ public class ReceiptServiceImpl implements ReceiptService {
             Double price = eachProduct.getPrice();
             Double qty = eachProduct.getQty();
             Double sum = price*qty;
-            subtotal+= sum;
+            subtotal += sum;
             Integer key = eachProduct.getType();
             ProductType productType = getProductType(key);
             tax = calcTax(tax,productType,currentLocation,sum);
@@ -34,9 +34,9 @@ public class ReceiptServiceImpl implements ReceiptService {
         tax = Math.ceil(tax*20)/20;
         total = subtotal+ tax;
 
-        subtotal= Double.valueOf(df.format(subtotal));
-        tax= Double.valueOf(df.format(tax));
-        total= Double.valueOf(df.format(total));
+        subtotal = Double.valueOf(df.format(subtotal));
+        tax = Double.valueOf(df.format(tax));
+        total = Double.valueOf(df.format(total));
 
         receiptResponse.setSubtotal(subtotal);
         receiptResponse.setTax(tax);
@@ -46,7 +46,7 @@ public class ReceiptServiceImpl implements ReceiptService {
 
     private Location getCurrentLocation(Integer countryCode){
         for (Location eachLocation : Location.values()) {
-            if(countryCode==eachLocation.getKey()){
+            if(countryCode == eachLocation.getKey()){
                 return eachLocation;
             }
         }
@@ -55,32 +55,32 @@ public class ReceiptServiceImpl implements ReceiptService {
 
     private ProductType getProductType(Integer key){
         for (ProductType eachType : ProductType.values()) {
-            if(key==eachType.getKey()){
+            if(key == eachType.getKey()){
                 return eachType;
             }
         }
         return ProductType.OTHER;
     }
 
-    private Double calcTax(Double tax,ProductType type,Location location,Double sum){
+    private Double calcTax(Double tax, ProductType type, Location location, Double sum){
         switch(location){
             case CA:{
                 if(!type.equals(ProductType.FOOD)){
-                    tax+=sum*location.getTaxRate()/100;
+                    tax += sum*location.getTaxRate()/100;
                     return tax;
                 }
                 return tax;
             }
             case NY:{
                 if(type.equals(ProductType.OTHER)){
-                    tax+=sum*location.getTaxRate()/100;
+                    tax += sum*location.getTaxRate()/100;
                     return tax;
                 }
                 return tax;
             }
 
             default:{
-                tax+=sum*location.getTaxRate()/100;
+                tax += sum*location.getTaxRate()/100;
                 return tax;
             }
         }
